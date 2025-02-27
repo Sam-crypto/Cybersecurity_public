@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>TEACHER AREA</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+
+
+       <style>
+
+    .bg {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: 300% 300%;
+      background-image: linear-gradient(-45deg, #d00d0d 0%, #d3d338 25%, #517be3 51%, #ff357f 100%);
+      -webkit-animation: AnimateBG 20s ease infinite;
+      animation: AnimateBG 20s ease infinite;
+    }
+
+    @-webkit-keyframes AnimateBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes AnimateBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="pricing.css" rel="stylesheet">
+  </head>
+
+
+
+  <body class="bg">
+    {% if current_user.is_authenticated  %}
+
+      <div class="container py-3">
+        <header>
+          <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+            <a href="/teacherArea" class="d-flex align-items-center text-dark text-decoration-none">
+              <span class="fs-4">EXAMS_MANAGER</span>
+            </a>
+
+            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+              <a class="me-3 py-2 text-dark text-decoration-none" href='/logout'>LOGOUT</a>
+            </nav>
+          </div>
+
+          <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h2 class="display-4 fw-normal">Benvenuto {{ name }} {{ surname }} nella tua area docente!</h2>
+            <p class="fs-5 text-muted">Nella tua area personale puoi aggiungere nuovi corsi oppure eliminare quelli esistenti e visualizzare i tuoi dati personali.</p>
+          </div>
+        </header>
+
+        <main>
+          <div class="row row-cols-1 row-cols-md-4 mb-3 text-center">
+            <div class="col">
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 class="my-0 fw-normal">Crea degli esami</h4>
+                </div>
+                <div class="card-body">
+                  <p class="fs-5 text-muted">Qui puoi aggiungere i tuoi esami.</p>
+                  <a href='/registrationExam' class="text-white text-decoration-none"><button type="button" class="w-100 btn btn-lg btn-primary text-white">Vai</button></a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 class="my-0 fw-normal">I miei esami</h4>
+                </div>
+                <div class="card-body">
+                  <p class="fs-5 text-muted">Qui puoi visualizzare tutti gli esami e altre informazioni</p>
+                  <a href='/showAllTeacherExam' class="text-white text-decoration-none"><button type="button" class="w-100 btn btn-lg btn-primary text-white">Vai</button></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 class="my-0 fw-normal">Risultati Test</h4>
+                </div>
+                <div class="card-body">
+                  <p class="fs-5 text-muted">Qui puoi vedere i test passati e dare valutazioni agli studenti.</p>
+                  <a href='/showAllTeacherAppeal' class="text-white text-decoration-none"><button type="button" class="w-100 btn btn-lg btn-primary text-white">Vai</button></a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 class="my-0 fw-normal">Informazioni personali</h4>
+                </div>
+                <div class="card-body">
+                  <p class="fs-5 text-muted">Visualizzi le informazioni del tuo account.</p>
+                  <a href='/showTeacherInfo' class="text-white text-decoration-none"><button type="button" class="w-100 btn btn-lg btn-primary ">Vai</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+
+      </div>
+    {% else %}
+      <p>NON SEI AUTENTICATO!</p>
+      <br>
+      <a href='/'>HOME</a>
+    {% endif %}
+  </body>
+
+  <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+</html>

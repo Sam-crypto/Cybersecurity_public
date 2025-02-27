@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>Registration Teacher</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+
+
+        <style>
+
+    .bg {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: 300% 300%;
+      background-image: linear-gradient(-45deg, #d00d0d 0%, #d3d338 25%, #517be3 51%, #ff357f 100%);
+      -webkit-animation: AnimateBG 20s ease infinite;
+      animation: AnimateBG 20s ease infinite;
+    }
+
+    @-webkit-keyframes AnimateBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes AnimateBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+  </head>
+
+
+  <body class="bg">
+    <div class="container py-3">
+
+      <header>
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+          <h3 class="h3 mb-3 fw-normal">CREA UN NUOVO ACCOUNT DOCENTE</h3>
+          <p class="fs-5 text-muted">Inserisci i dati richiesti per creare l'account</p>
+        </div>
+      </header>
+
+
+      <div class="d-flex justify-content-center">
+        <main class="form-signin">
+
+
+          <form action='/registration/newTeacher' method="POST">
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name <span class="text-danger">*</span></label>
+              {% if error is not defined %}
+                <input name="name" type="text" class="form-control" required>
+              {% else %}
+                <input name="name" type="text" class="form-control" required value="{{ name }}">
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Surname <span class="text-danger">*</span></label>
+              {% if error is not defined %}
+                <input name="surname" type="text" class="form-control" required>
+              {% else %}
+                <input name="surname" type="text" class="form-control" required value="{{ surname }}">
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Telephone <span class="text-danger">*</span></label>
+              {% if error is not defined %}
+                <input name="telephone" type="text" class="form-control" required>
+              {% else %}
+                <input name="telephone" type="text" class="form-control" required value="{{ telephone }}">
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address <span class="text-danger">*</span></label>
+              {% if error is defined and error=="email" %}
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ email }}" required>
+                <div id="emailHelp2" class="form-text text-danger">Indirizzo Email già usato. Inserire Email diversa.</div>
+              {% elif error is defined and error=="email_matricola" %}
+                <input name="email" type="email" class="form-control" id="exampleInputEmail5" aria-describedby="emailHelp" value="{{ email }}" required>
+                <div id="emailHelp3" class="form-text text-danger">I primi 6 caratteri della email devono essere uguali alla matricola</div>
+              {% elif error is defined and error=="pwd" %}
+                <input name="email" type="email" class="form-control" id="exampleInputEmail4" aria-describedby="emailHelp" value="{{ email }}" required>
+              {% else %}
+                <input name="email" type="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="matricola@unive.it" required>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Faculty <span class="text-danger">*</span></label>
+              {% if error is defined and error=="faculty" %}
+                <input name="faculty" type="text" class="form-control" id="exampleInputEmail13" required value="{{ faculty }}">
+              {% else %}
+                <input name="faculty" type="text" class="form-control" id="exampleInputEmail14" required>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password <span class="text-danger">*</span></label>
+              {% if error is defined and error=="pwd" %}
+                <input name="pwd" type="password" class="form-control" id="exampleInputPassword" required value="{{ pwd1 }}">
+              {% else %}
+                <input name="pwd" type="password" class="form-control" id="exampleInputPassword2" required>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Conferma password <span class="text-danger">*</span></label>
+              {% if error is defined and error=="pwd" %}
+                <input name="pwd2" type="password" class="form-control" id="exampleInputPassword8" required>
+                <div id="emailHelp" class="form-text text-danger">Password di conferma non valida.</div>
+              {% else %}
+                <input name="pwd2" type="password" class="form-control" id="exampleInputPassword1" required>
+              {% endif %}
+            </div>
+
+            <p class="lead">
+              <button type="submit" class="btn btn-lg btn-primary border-white bg-blue">Registrati</button>
+              <a href='/' class="btn btn-lg btn-danger border-white bg-blue">Annulla registrazione</a>
+            </p>
+          </form>
+
+
+        </main>
+      </div>
+    </div>
+  </body>
+  <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+</html>
